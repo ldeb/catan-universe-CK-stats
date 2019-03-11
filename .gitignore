@@ -105,6 +105,5 @@ venv.bak/
 
 # web
 web/images/*
-web/images-exemple
-web/STUFF
-web/images-exemple
+web/images-exemple/
+web/STUFF/
