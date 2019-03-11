@@ -130,7 +130,7 @@ $(function() {
 
     var current_dice = 0;
 
-    html_images+='<div class="list_images">'
+    html_images+='<div class="list_images">';
     images.forEach(function(filename) {
       var filename_parts = filename.split('-');
       // var col_pos = filename.indexOf('-hex');
@@ -248,7 +248,7 @@ $(function() {
   function scan(){
     $('.icon_loading').show();
     api('api.php?action=files', function(images){
-      if( images.length != current_nb_images) {
+      if( Array.isArray(images) && images.length != current_nb_images) {
         traite_images(images);
       }
       $('.icon_loading').hide();

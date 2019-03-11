@@ -45,6 +45,9 @@ class Livecatan:
 
     def init(self):
         print('--- Live Catan Universe C&K dice stats ---')
+        # create images/ directory if it doesn't exists
+        if not os.path.exists(self.dirpath):
+            os.makedirs(self.dirpath)
         # script's action argument
         if self.action != None:
             if self.action == 'start':

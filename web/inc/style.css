@@ -144,6 +144,10 @@ input[type="number"] {
 .list_images .img .buts button {
   cursor: pointer;
 }
+/* to avoid a bug: deleting after a miss-click problem) */
+.list_images > .img:nth-of-type(1) .buts button.but-delete {
+  display: none;
+}
 /* no more used */
 .color, .number {
   display: inline-block;

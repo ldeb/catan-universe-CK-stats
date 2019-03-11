@@ -3,7 +3,7 @@
 function get_files(){
   $dir    = 'images/';
   // $files = scandir($dir, SCANDIR_SORT_DESCENDING);
-  $files = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), array('..', '.', 'index.php'));
+  $files = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), array('..', '.'));
   return $files;
 }
 function delete_file($filename){

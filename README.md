@@ -1,4 +1,6 @@
-[Catan Universe](https://catanuniverse.com/) (web or app) watcher/stats for City & Knigths games
+[Catan Universe](https://catanuniverse.com/) (web or app) watcher/statistics for City & Knigths games (dice and color stats)
+
+![screenshot](https://raw.githubusercontent.com/ldeb/catan-universe-CK-stats/master/screenshot.png)
 
 # Instructions:
 Made for a 1920x1080 resolution on main screen, Chrome browser with 2 lines of tools and extanded to screen borders
@@ -14,7 +16,7 @@ will miss 2 dice in a row if they look exactly the same (sames dices and color)
 # Installation:
 (todo)
 
-# START for windows: (adjsut to match your directory)
+## Start: (adjust to match your directory)
 ```
 cd workspace/python/livecatan
 source ../pyscreenshot/venv/Scripts/activate
