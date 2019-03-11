@@ -1,0 +1,7 @@
+cd workspace/python/livecatan
+source ../pyscreenshot/venv/Scripts/activate
+# for Web mode:
+python -m main
+
+# for App mode:
+python -m main app
