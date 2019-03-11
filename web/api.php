@@ -3,7 +3,7 @@
 function get_files(){
   $dir    = 'images/';
   // $files = scandir($dir, SCANDIR_SORT_DESCENDING);
-  $files = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), array('..', '.'));
+  $files = array_diff(scandir($dir, SCANDIR_SORT_DESCENDING), array('..', '.', 'index.php'));
   return $files;
 }
 function delete_file($filename){
@@ -19,7 +19,7 @@ function duplicate_file($filename){
   return @copy($dir.$filename, $dir.$new_filename);
 }
 
-$SHELL_PYTHON_PATH = "python"; //"/home/yacpve/.virtualenvs/pers2pict/bin/python";
+$SHELL_PYTHON_PATH = "python";
 
 if(isset($_GET['action'])) {
   switch($_GET['action']){
@@ -36,20 +36,20 @@ if(isset($_GET['action'])) {
         echo json_encode( [duplicate_file($_GET['filename'])] );
       }
       break;
-    case 'start' :
-      ////////////////////////////////////////////
-      // PYTHON : ON LANCE LE SCRIPT  -   Not really reliable...
-      ////////////////////////////////////////////
-      $pyscript = 'C:\\users\\lolo8\\workspace\\python\\livecatan\\main.py';
-      $python = 'C:\\Users\\Lolo8\\workspace\\python\\pyscreenshot\\venv\\Scripts\\python.exe';
-      $action = '';
-      $cmd = "$python $pyscript $action";
-      $res = exec("$cmd", $output);
-      $res = exec("s", $output);
-      var_dump($res);
-      var_dump($output);
-      // echo json_encode( $output );
-      break;
+    // case 'start' :
+    //   ////////////////////////////////////////////
+    //   // PYTHON : Starts python script  -   Not really reliable... - work in progress
+    //   ////////////////////////////////////////////
+    //   $pyscript = 'C:\\users\\lolo8\\workspace\\python\\livecatan\\main.py';
+    //   $python = 'C:\\Users\\Lolo8\\workspace\\python\\pyscreenshot\\venv\\Scripts\\python.exe';
+    //   $action = '';
+    //   $cmd = "$python $pyscript $action";
+    //   $res = exec("$cmd", $output);
+    //   $res = exec("s", $output);
+    //   var_dump($res);
+    //   var_dump($output);
+    //   // echo json_encode( $output );
+    //   break;
 
     default:
   }

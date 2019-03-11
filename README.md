@@ -1,32 +1,41 @@
 [Catan Universe](https://catanuniverse.com/) (web or app) watcher/stats for City & Knigths games
 
-# INSTRUCTIONS:
+# Instructions:
 Made for a 1920x1080 resolution on main screen, Chrome browser with 2 lines of tools and extanded to screen borders
 
-# LIMITATION:
+# Limitation:
 will miss 2 dice in a row if they look exactly the same (sames dices and color)
 
-# REQUIREMENTS:
+# Requirements:
 - web server with PHP
-- python environment
+- python environment: PIL, [pyscreenshot](https://github.com/ponty/pyscreenshot), numpy, pywinauto (unused yet)
+- adjust config.py
 
-# INSTALLATION:
+# Installation:
 (todo)
 
-# START for windows:
-cd workspace/python/livecatan					# adjsut to match your directory
-source ../pyscreenshot/venv/Scripts/activate	# adjsut to match your directory
+# START for windows: (adjsut to match your directory)
+```
+cd workspace/python/livecatan
+source ../pyscreenshot/venv/Scripts/activate
 python -m main
+```
+
+**to start directly**
+`python -m main start`
+
+**to run for Catan Universe Steam application (in fullscreen)**
+`python -m main app`
 
 # TODO:
-## WEB:
+## Web:
   - no last dice unsel on color change (?)
   - show total duration / show last date modif date
   - save in cookie
   - start/stop python (doable?)
   - proportionnal bars on the left
 
-## PYTHON:
+## Python:
   - Desired usage: python -m livecapture pos_x pos_y delay
   - or -m livecapture -mode=catan
   - or list windows and choose one

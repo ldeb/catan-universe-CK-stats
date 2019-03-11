@@ -105,6 +105,7 @@ venv.bak/
 
 # web
 bug_*
+web/temp.png
 web/images/*
 web/images-exemple/
 web/STUFF/

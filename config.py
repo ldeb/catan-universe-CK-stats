@@ -1,6 +1,3 @@
-
-interval = 2 # sec
-dirpath = 'C:/Users/Lolo8/workspace/python/livecatan/web/images/'
-lastfilename = ''
-nbmax = 500
-nb = 0
+dirpath = 'C:/Users/Lolo8/workspace/python/livecatan/web/images/' # path to screenshots
+interval = 2        # scan interval in seconds
+nbmax = 200         # max screenshots

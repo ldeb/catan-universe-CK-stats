@@ -1,10 +1,10 @@
 # import threading
 import os, shutil
 import time
-import pywinauto.findwindows
-from pywinauto import application
-# from perpetualtimer import perpetualTimer
+# import pywinauto.findwindows
+# from pywinauto import application
 from perpetual_timer import PerpetualTimer
+# from perpetualtimer import perpetualTimer
 
 from config import *
 from functions import *
@@ -23,29 +23,29 @@ class Livecatan:
         # self.mode = None
         # if len(sys.argv) > 2:
         #     self.mode = sys.argv[2]
-        self.interval = 2 # sec
-        self.nbmax = 200
-        self.dirpath = 'C:/Users/Lolo8/workspace/python/livecatan/web/images/'
+        self.interval = interval # sec
+        self.nbmax = nbmax
+        self.dirpath = dirpath
 
         self.lastfilename = ''
         self.nb = 0
         self.screenshot_coords = screenshot_coords_web
 
 
-    def find_catan_windows(self):
-        app = application.Application()
-        # win = app.window(title='Untitled - Notepad')
-        # win = app.CatanUniverse
-        # win = app.window(title='Catan Universe')
-        # win = app.connect(title='Catan Universe - Google Chrome')
-        win = app.connect(best_match='Catan Universe')
-        print(win)
-        dlg = win.wrapper_object()
-        print(dir(dlg))
+    # def find_catan_windows(self):   # unused yet, work in progress
+    #     app = application.Application()
+    #     # win = app.window(title='Untitled - Notepad')
+    #     # win = app.CatanUniverse
+    #     # win = app.window(title='Catan Universe')
+    #     # win = app.connect(title='Catan Universe - Google Chrome')
+    #     win = app.connect(best_match='Catan Universe')
+    #     print(win)
+    #     dlg = win.wrapper_object()
+    #     print(dir(dlg))
 
     def init(self):
-        print('--- Live Catan Universe Dice Stats ---')
-        # action argument du script
+        print('--- Live Catan Universe C&K dice stats ---')
+        # script's action argument
         if self.action != None:
             if self.action == 'start':
                 clean_images(self.dirpath)
@@ -91,7 +91,6 @@ class Livecatan:
             self.letimer.cancel()
             # return True
 
-# Auto-lancement
 def main():
     livecatan = Livecatan()
     livecatan.init()
