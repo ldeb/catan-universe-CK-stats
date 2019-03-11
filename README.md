@@ -20,20 +20,20 @@ will miss 2 dice in a row if they look exactly the same (same dices and color)
 # Installation:
 (todo)
 
-**to start script (adjust to match your directory)**
+**to launch script (adjust to match your directory):**
 ```
 cd workspace/python/livecatan
 source ../pyscreenshot/venv/Scripts/activate
 python -m main
 ```
 
-**to start scriptdirectly**  
+**to launch and start script:**  
 `python -m main start`
 
-**to run for Catan Universe Steam application (in full screen)**  
+**to run for Catan Universe Steam application (in full screen):**  
 `python -m main app`
 
-**to stop script**  
+**to stop script:**  
 `CTRL + C`
 
 # TODO:
