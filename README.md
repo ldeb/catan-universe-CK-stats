@@ -1,9 +1,10 @@
-[Catan Universe](https://catanuniverse.com/) (web or app) watcher/statistics for City & Knigths games (dice and color stats)
+[Catan Universe](https://catanuniverse.com/) (web or app) watcher/statistics for City & Knights games (dice and color stats)
 
 ![screenshot](https://raw.githubusercontent.com/ldeb/catan-universe-CK-stats/master/screenshot.png)
 
 # Instructions:
-Made for a 1920x1080 resolution on main screen, Chrome browser with 2 lines of tools and extanded to screen borders
+Made for a 1920x1080 resolution on main screen, Chrome browser with 2 lines of tools and extended to screen borders.
+You need add those lines of CSS at the end of the web Catan Universe's style.css thanks to Chrome DevTools : `div.template-wrap{margin: 0 auto;} div.template-wrap, div.game-view {width: 100%;} div.game-container {height: 100%;} #footer,nav.navbar{display: none;}`
 
 # Limitation:
 will miss 2 dice in a row if they look exactly the same (sames dices and color)
@@ -26,7 +27,7 @@ python -m main
 **to start directly**
 `python -m main start`
 
-**to run for Catan Universe Steam application (in fullscreen)**
+**to run for Catan Universe Steam application (in full screen)**
 `python -m main app`
 
 # TODO:
@@ -35,7 +36,7 @@ python -m main
   - show total duration / show last date modif date
   - save in cookie
   - start/stop python (doable?)
-  - proportionnal bars on the left
+  - proportional bars on the left
 
 ## Python:
   - Desired usage: python -m livecapture pos_x pos_y delay
