@@ -104,6 +104,7 @@ venv.bak/
 .mypy_cache/
 
 # web
+bug_*
 web/images/*
 web/images-exemple/
 web/STUFF/
