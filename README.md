@@ -10,28 +10,31 @@ div.template-wrap{margin: 0 auto;} div.template-wrap, div.game-view {width: 100%
 ```
 
 # Limitation:
-will miss 2 dice in a row if they look exactly the same (sames dices and color)
+will miss 2 dice in a row if they look exactly the same (same dices and color)
 
 # Requirements:
 - web server with PHP
 - python environment: PIL, [pyscreenshot](https://github.com/ponty/pyscreenshot), numpy, pywinauto (unused yet)
-- adjust config.py
+- **adjust *config.py* variables**
 
 # Installation:
 (todo)
 
-## Start: (adjust to match your directory)
+**to start script (adjust to match your directory)**
 ```
 cd workspace/python/livecatan
 source ../pyscreenshot/venv/Scripts/activate
 python -m main
 ```
 
-**to start directly**  
+**to start scriptdirectly**  
 `python -m main start`
 
 **to run for Catan Universe Steam application (in full screen)**  
 `python -m main app`
+
+**to stop script**  
+`CTRL + C`
 
 # TODO:
 ## Web:
