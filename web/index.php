@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+
     <link href="inc/style.css" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="inc/favicon-16x16.png" sizes="16x16">
@@ -31,7 +33,10 @@
 
           <!-- <p class="lead"></p> -->
 
-          <h3>Dice</h3>
+          <h3>Dices</h3>
+
+          <canvas id="stats_graph" class="my-2" height="200"></canvas>
+
           <div class="dice">
             <?php for($i=2; $i<=12; $i++) : ?>
             <div class="row no-gutters0">
@@ -44,6 +49,7 @@
           <hr />
 
           <h3>Colors</h3>
+
           <div class="row com sheep no-gutters">
             <div class="col-1">&nbsp;</div>
             <div class="col"><input name="sheep" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
@@ -79,7 +85,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="inc/script.js"></script>
 
   </body>

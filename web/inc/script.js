@@ -85,16 +85,16 @@ $(function() {
       dataType : 'html',
       // data : data,
       success : function(retour_json){
-  			if(retour_json != ''){
+        if(retour_json != ''){
           // console.log(retour_json);
-  		    retour_json = JSON.parse(retour_json);
+          retour_json = JSON.parse(retour_json);
           if(on_success) on_success(retour_json);
-  			} else {
-  				console.log('error retour ajax');
-  			}
+        } else {
+          console.log('error retour ajax');
+        }
       },
       error : function(resultat, statut, erreur){
-  			console.log( 'Error: ', resultat);
+        console.log( 'Error: ', resultat);
       }
     });
   }
@@ -178,6 +178,7 @@ $(function() {
     special_colors.forEach(function(col) {
       let nb = stats[col];
       nb = (typeof nb === 'undefined') ? 0 : nb;
+      stats[col] = nb;
       // html+= '<div class="color" style="background-color:#'+col+';">' + nb + '</div>';
       $('.com input').eq(num).val(nb).change();
       tot += nb;
@@ -203,6 +204,7 @@ $(function() {
     special_dices.forEach(function(res) {
       let nb = dices[res];
       nb = (typeof nb === 'undefined') ? 0:nb;
+      dices[res] = nb;
       // html+= '<div class="number">' + res + '<br><small>' + nb + '</small></div>';
       $('.dice input[name="d'+ res +'"]').val(nb).change();
     });
@@ -241,15 +243,21 @@ $(function() {
     the_images.find('.buts .but-duplicate').click(function(){
       img_duplicate($(this).parent().parent());
     });
+
+    dices.splice(0,2);
+    return dices;
   }
 
   // API SCAN FILES
   var current_nb_images = 0;
+  var last_stats = [];
+
   function scan(){
     $('.icon_loading').show();
     api('api.php?action=files', function(images){
       if( Array.isArray(images) && images.length != current_nb_images) {
-        traite_images(images);
+        last_stats = traite_images(images);
+        if(last_stats.length > 0) update_stats_graph(last_stats);
       }
       $('.icon_loading').hide();
       current_nb_images = images.length;
@@ -262,6 +270,77 @@ $(function() {
     scan();
     timer = setInterval(function(){ scan(); }, scan_interval);
   }
+
+  // Charts.js
+  Array.prototype.max = function() {
+    return Math.max.apply(null, this);
+  };
+  Array.prototype.min = function() {
+    return Math.min.apply(null, this);
+  };
+  Chart.defaults.global.defaultFontColor = '#fff';
+  Chart.defaults.global.defaultFontSize = 12;
+  function update_stats_graph(last_stats){
+
+    // console.log(last_stats);
+
+    var ctx = document.getElementById('stats_graph').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: special_dices,
+        datasets: [{
+          // legend: false,
+          label: 'x',
+          data: last_stats,//[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2],
+          // backgroundImage: 'url(background.jpg)',
+          // backgroundPosition: 'bottom right',
+          // backgroundRepeat: 'repeat-y',
+          backgroundColor: '#a45633',
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            barPercentage: 1,
+            categoryPercentage: 0.95,
+            ticks: {
+              // mirror: true,
+            },
+            gridLines: {
+              display: true,
+              color: '#333',
+              offsetGridLines: true,
+            },
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: last_stats.max(),
+            },
+            gridLines: {
+              display: true,
+              color: '#333',
+              offsetGridLines: false,
+            },
+          }]
+        },
+        defaultFontColor: 'white',
+        legend: {
+          display: false,
+          labels: {
+            // This more specific font property overrides the global property
+            fontColor: 'white',
+          }
+        },
+        layout: {
+          padding: {
+          }
+        }
+      }
+    });
+  }
+
 
   $('.icon_loading').hide();
   start_scan();
