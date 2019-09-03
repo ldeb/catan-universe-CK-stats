@@ -19,6 +19,11 @@ will miss 2 dice in a row if they look exactly the same (same dices and color)
 
 # Installation:
 (todo)
+```
+pip install --upgrade --force-reinstall -r requirements.txt
+pip install pip-upgrader
+pip-upgrade
+```
 
 **to launch script (adjust to match your directory):**
 ```
