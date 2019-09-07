@@ -78,6 +78,7 @@ $(function() {
 
     }
   }
+  // API
   function api(url, on_success = null, on_error = null){
     ajax_edit_ajax = $.ajax({
       url : url,
@@ -107,6 +108,7 @@ $(function() {
   var MODE = 'web';
   var MODE_determined = false;
 
+  // WEB or APP ?
   function determine_mode(col){
     let mode_temp = false;
     if(col != '000000') {
@@ -120,6 +122,9 @@ $(function() {
       MODE_determined = true;
     }
   }
+  function update_duration(duration) {
+    $('#txt_duration').html(duration);
+  }
 
   function traite_images(images){
     var html = '';
@@ -131,8 +136,26 @@ $(function() {
     var current_dice = 0;
 
     html_images+='<div class="list_images">';
+
+    let compt = 1;
+    let date_start;
+    let date_end;
+    let duration;
+
     images.forEach(function(filename) {
       var filename_parts = filename.split('-');
+
+      // calculate duration
+      if( compt == 1 ) {
+        date_end = moment(filename_parts[0],'YYYYMMDDhhmmss');  //20190907132243
+      } else if( compt == images.length ) {
+        date_start = moment(filename_parts[0],'YYYYMMDDhhmmss');
+        let ms = date_end.diff(date_start);
+        let ms_d = moment.duration(ms);
+        duration = Math.floor(ms_d.asHours()) + moment.utc(ms).format(":mm:ss");
+      }
+      compt++;
+
       // var col_pos = filename.indexOf('-hex');
       // color = filename.substr(col_pos+4, 6);
       // console.log(filename_parts);
@@ -167,6 +190,8 @@ $(function() {
       html_images+= '<div class="img"><img class="img0" src="images/'+filename+'" alt="'+filename+'" title="'+filename+'">' + html_img_num + html_buts + '</div>';
       // html_images+= ( num == 1 ) ? '<br>':'';
     });
+    update_duration(duration);
+
     html_images+='</div>'
     // console.log(dices);
     var tot_img = num;
@@ -341,7 +366,7 @@ $(function() {
     });
   }
 
-
+  // START
   $('.icon_loading').hide();
   start_scan();
 

@@ -26,29 +26,22 @@
 
     <div class="container-fluid">
 
-      <h1 class="header-text text-light"><span class="icon_loading fas fa-sync-alt fa-spin mr-2"></span><a href="index.php">Catan Universe Stats 2019 &copy; faYa </a></h1>
+      <h1 class="header-text text-light m-0 mt-1"><span class="icon_loading fas fa-sync-alt fa-spin mr-2"></span><a href="index.php">Catan Universe Stats 2019 &copy; faYa </a></h1>
 
       <div class="row">
-        <div class="col-3 left-col">
+        <div class="col-12 col-sm-3 left-col">
 
           <!-- <p class="lead"></p> -->
 
-          <h3>Dices</h3>
+          <h6>Duration: <span id="txt_duration" class="header-text0 text-light font-weight-normal"></span></h6>
 
+
+          <h6>Dices</h6>
           <canvas id="stats_graph" class="my-2" height="200"></canvas>
 
-          <div class="dice">
-            <?php for($i=2; $i<=12; $i++) : ?>
-            <div class="row no-gutters0">
-              <div class="col-1"><?=$i?></div>
-              <div class="col"><input name="d<?=$i?>" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div><div class="bar_legend"><?=$i?></div></div>
-            </div>
-          <?php endfor; ?>
+          <!-- <hr /> -->
 
-          </div>
-          <hr />
-
-          <h3>Colors</h3>
+          <h6>Colors</h6>
 
           <div class="row com sheep no-gutters">
             <div class="col-1">&nbsp;</div>
@@ -67,9 +60,23 @@
             <div class="col"><input name="robber" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
           </div>
 
+          <hr>
+
+          <a class="h6 d-block" href="#dices_details" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="dices_details" data-target="#dices_details">Dices (details)</a>
+          <div id="dices_details" class="dice collapse">
+            <?php for($i=2; $i<=12; $i++) : ?>
+            <div class="row no-gutters0">
+              <div class="col-1"><?=$i?></div>
+              <div class="col"><input name="d<?=$i?>" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div><div class="bar_legend"><?=$i?></div></div>
+            </div>
+          <?php endfor; ?>
+          </div>
+
           <div class="form-group mt-5">
             <input type="text" name="css" class="form-control form-control-sm bg-dark text-light" value="div.template-wrap{margin: 0 auto;} div.template-wrap, div.game-view {width: 100%;} div.game-container {height: 100%;} #footer,nav.navbar{display: none;}" title="to paste at the bottom of catanuniverse.com's style.css">
           </div>
+
+          <hr>
 
         </div><!-- /col-1-->
 
@@ -86,6 +93,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js" integrity="sha256-AdQN98MVZs44Eq2yTwtoKufhnU+uZ7v2kXnD5vqzZVo=" crossorigin="anonymous"></script>
     <script src="inc/script.js"></script>
 
   </body>

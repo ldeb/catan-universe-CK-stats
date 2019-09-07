@@ -6,13 +6,13 @@ body.dark {
   color: #eee;
 
 }
-h1.header-text {
+.header-text {
   text-align: right;
   font-size: 0.8rem;
   /* text-transform: uppercase; */
 }
-h1.header-text a,
-h1.header-text a:hover {
+.header-text a,
+.header-text a:hover {
   color: #000;
   text-decoration: none;
 }

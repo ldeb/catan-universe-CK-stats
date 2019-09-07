@@ -109,3 +109,7 @@ web/temp.png
 web/images/*
 web/images-exemple/
 web/STUFF/
+*.url
+*.psd
+screen.jpg
+perpetualtimer.py
