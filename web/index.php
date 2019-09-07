@@ -37,33 +37,11 @@
 
 
           <h6>Dices</h6>
-          <canvas id="stats_graph" class="my-2" height="200"></canvas>
 
-          <!-- <hr /> -->
+          <canvas id="stats_graph" class="mt-2" height="200"></canvas>
 
-          <h6>Colors</h6>
-
-          <div class="row com sheep no-gutters">
-            <div class="col-1">&nbsp;</div>
-            <div class="col"><input name="sheep" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
-          </div>
-          <div class="row com rock no-gutters">
-            <div class="col-1">&nbsp;</div>
-            <div class="col"><input name="rock" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
-          </div>
-          <div class="row com wood no-gutters">
-            <div class="col-1">&nbsp;</div>
-            <div class="col"><input name="wood" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
-          </div>
-          <div class="row com robber no-gutters">
-            <div class="col-1">&nbsp;</div>
-            <div class="col"><input name="robber" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
-          </div>
-
-          <hr>
-
-          <a class="h6 d-block" href="#dices_details" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="dices_details" data-target="#dices_details">Dices (details)</a>
-          <div id="dices_details" class="dice collapse">
+          <a class="text-white" href="#dices_details" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="dices_details" data-target="#dices_details">Dices (details)</a>
+          <div id="dices_details" class="dice collapse mb-4">
             <?php for($i=2; $i<=12; $i++) : ?>
             <div class="row no-gutters0">
               <div class="col-1"><?=$i?></div>
@@ -71,6 +49,33 @@
             </div>
           <?php endfor; ?>
           </div>
+
+
+          <h6 class="mt-4">Colors</h6>
+
+          <canvas id="colors_graph" class="my-2" style="background-color: #613725;" height="120"></canvas>
+
+          <a class="text-white" href="#colors_details" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="colors_details" data-target="#colors_details">Colors (details)</a>
+          <div id="colors_details" class="collapse mb-4">
+            <div class="row com sheep no-gutters">
+              <div class="col-1">&nbsp;</div>
+              <div class="col"><input name="sheep" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
+            </div>
+            <div class="row com rock no-gutters">
+              <div class="col-1">&nbsp;</div>
+              <div class="col"><input name="rock" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
+            </div>
+            <div class="row com wood no-gutters">
+              <div class="col-1">&nbsp;</div>
+              <div class="col"><input name="wood" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
+            </div>
+            <div class="row com robber no-gutters">
+              <div class="col-1">&nbsp;</div>
+              <div class="col"><input name="robber" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div></div>
+            </div>
+          </div>
+
+          <hr>
 
           <div class="form-group mt-5">
             <input type="text" name="css" class="form-control form-control-sm bg-dark text-light" value="div.template-wrap{margin: 0 auto;} div.template-wrap, div.game-view {width: 100%;} div.game-container {height: 100%;} #footer,nav.navbar{display: none;}" title="to paste at the bottom of catanuniverse.com's style.css">

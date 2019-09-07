@@ -102,6 +102,7 @@ $(function() {
 
   var special_colors_web = ['d79e31','008ba9','458d32', '000000'];
   var special_colors_app =  ['d3a105','2c8bad','4a8f1b'];
+  var special_colors;
 
   var special_dices = [2,3,4,5,6,7,8,9,10,11,12];
 
@@ -130,7 +131,7 @@ $(function() {
     var html = '';
     var html_images = '';
     var num=0;
-    var stats=[];
+    var colors={};
     var dices=[];
 
     var current_dice = 0;
@@ -161,8 +162,8 @@ $(function() {
       // console.log(filename_parts);
       if( filename_parts.length > 2 ) {
         color = filename_parts[2].substr(3, 6);
-        if(stats[color]) stats[color]++;
-        else stats[color]=1;
+        if(colors[color]) colors[color]++;
+        else colors[color]=1;
         if( ! MODE_determined) determine_mode(color);
       }
 
@@ -196,24 +197,24 @@ $(function() {
     // console.log(dices);
     var tot_img = num;
     // html+= '<h3>Statistiques</h3>';
-    var special_colors = (MODE=='app') ? special_colors_app : special_colors_web;
+    special_colors = (MODE=='app') ? special_colors_app : special_colors_web;
     // colors
     var tot = 0;
     var num = 0;
     special_colors.forEach(function(col) {
-      let nb = stats[col];
+      let nb = colors[col];
       nb = (typeof nb === 'undefined') ? 0 : nb;
-      stats[col] = nb;
+      colors[col] = nb;
       // html+= '<div class="color" style="background-color:#'+col+';">' + nb + '</div>';
       $('.com input').eq(num).val(nb).change();
       tot += nb;
       num++;
     });
-    // console.log(stats);
+    // console.log(colors);
     // // Quick n dirty hack for 'app' MODE
     // var num = 0;
     // special_colors_app.forEach(function(col) {
-    //   let nb = stats[col];
+    //   let nb = colors[col];
     //   nb = (typeof nb === 'undefined') ? 0:nb;
     //   // html+= '<div class="color" style="background-color:#'+col+';">' + nb + '</div>';
     //   $('.com input').eq(num).val(nb).change();
@@ -238,7 +239,8 @@ $(function() {
 
     // html+= ' = <strong>' + tot + '</strong>';
     // html+= '<hr>';
-    var nb_robber = ( stats['000000'] != undefined ) ? stats['000000'] : 0;
+    var nb_robber = ( colors['000000'] != undefined ) ? colors['000000'] : 0;
+    colors['000000'] = nb_robber;
     // console.log('nb_robber: '+nb_robber);
     if(MODE == 'app') {
       tot += nb_robber;
@@ -270,7 +272,11 @@ $(function() {
     });
 
     dices.splice(0,2);
-    return dices;
+    let res = {
+      'dices': dices,
+      'colors': colors,
+    };
+    return res;
   }
 
   // API SCAN FILES
@@ -282,7 +288,7 @@ $(function() {
     api('api.php?action=files', function(images){
       if( Array.isArray(images) && images.length != current_nb_images) {
         last_stats = traite_images(images);
-        if(last_stats.length > 0) update_stats_graph(last_stats);
+        if(last_stats['dices'].length > 0) update_stats_graph(last_stats);
       }
       $('.icon_loading').hide();
       current_nb_images = images.length;
@@ -297,6 +303,22 @@ $(function() {
   }
 
   // Charts.js
+  function get_max_from_obj(obj){
+    let max = 0;
+    for( index in obj ) {
+      let nb = obj[index];
+      max = (nb > max) ? nb : max;
+    };
+    return max;
+  }
+  // Object.prototype.max = function() {
+  //   let max = 0;
+  //   this.forEach(function(index) {
+  //     let nb = this[index];
+  //     max = (nb > max) ? nb : max;
+  //   });
+  //   return max;
+  // };
   Array.prototype.max = function() {
     return Math.max.apply(null, this);
   };
@@ -305,9 +327,10 @@ $(function() {
   };
   Chart.defaults.global.defaultFontColor = '#fff';
   Chart.defaults.global.defaultFontSize = 12;
+
   function update_stats_graph(last_stats){
 
-    // console.log(last_stats);
+    console.log(last_stats);
 
     var ctx = document.getElementById('stats_graph').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -317,7 +340,7 @@ $(function() {
         datasets: [{
           // legend: false,
           label: 'x',
-          data: last_stats,//[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2],
+          data: last_stats['dices'],//[12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2],
           // backgroundImage: 'url(background.jpg)',
           // backgroundPosition: 'bottom right',
           // backgroundRepeat: 'repeat-y',
@@ -341,7 +364,7 @@ $(function() {
           yAxes: [{
             ticks: {
               beginAtZero: true,
-              max: last_stats.max(),
+              max: last_stats['dices'].max(),
             },
             gridLines: {
               display: true,
@@ -364,7 +387,75 @@ $(function() {
         }
       }
     });
+
+    // colors stats
+    // if( special_colors['000000'] == undefined ) special_colors.push('000000');
+    if( special_colors.indexOf('000000') == -1 ) special_colors.push('000000');
+    let max_nb_color = get_max_from_obj(last_stats['colors'])
+    console.log(special_colors);
+
+    var ctx2 = document.getElementById('colors_graph').getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+      type: 'horizontalBar',
+      data: {
+        labels: special_colors,
+        datasets: [{
+          label: 'x',
+          data: [
+            last_stats['colors'][special_colors[0]],
+            last_stats['colors'][special_colors[1]],
+            last_stats['colors'][special_colors[2]],
+            last_stats['colors'][special_colors[3]],
+          ],
+          backgroundColor: [
+            '#' + special_colors[0],
+            '#' + special_colors[1],
+            '#' + special_colors[2],
+            '#' + special_colors[3],
+          ],
+          borderColor: '#fff',
+          // borderWidth: '0.5',
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            top: 10,
+          }
+        },
+        scales: {
+          xAxes: [{
+            barPercentage: 1,
+            categoryPercentage: 0.95,
+            ticks: {
+              display: true,
+              beginAtZero: true,
+              max: max_nb_color,
+            },
+            gridLines: {
+              display: true,
+              color: '#666',
+              // offsetGridLines: true,
+            },
+          }],
+          yAxes: [{
+            ticks: {
+              display: false,
+            },
+            gridLines: {
+              display: false,
+            },
+          }]
+        },
+        defaultFontColor: 'white',
+        legend: {
+          display: false,
+        },
+      }
+    });
+
   }
+
 
   // START
   $('.icon_loading').hide();
