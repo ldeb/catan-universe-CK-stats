@@ -28,6 +28,7 @@ class Livecatan:
         self.dirpath = dirpath
 
         self.lastfilename = ''
+        self.lastfileimage = None
         self.nb = 0
         self.screenshot_coords = screenshot_coords_web
 
@@ -85,7 +86,8 @@ class Livecatan:
     def routine(self):
         # self.nb = self.nb + 1
         # print('%s/%s' % (self.nb, self.nbmax))
-        res = watch(self.screenshot_coords, self.action, self.dirpath, self.lastfilename, self.nb)
+        res = watch(self.screenshot_coords, self.action, self.dirpath, self.lastfilename, self.lastfileimage, self.nb)
+        self.lastfileimage = res['lastfileimage']
         self.lastfilename = res['lastfilename']
         self.nb = res['nb']
 

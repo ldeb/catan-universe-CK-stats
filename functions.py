@@ -24,7 +24,6 @@ def clean_images(dirpath):
             try:
                 if os.path.isfile(file_path):
                     os.unlink(file_path)
-                #elif os.path.isdir(file_path): shutil.rmtree(file_path)
             except Exception as e:
                 print(e)
 
@@ -69,22 +68,18 @@ def get_number_dice(im, dice_num):
     else:
         x_decal = dice_decal
 
-    # rgb_im = im.convert('RGB')
     im = change_contrast(im, 200)
-    rgb_im = im.convert('RGB')#.convert('L')
-    # rgb_im.show()
+    rgb_im = im.convert('RGB')
     num = 2
     for coords in dot_pos:
         color_detected = get_color(im, (coords[0] + x_decal, coords[1]))
         passed = ( color_detected == '000000' )
         if passed:
             number = number + 1
-
-        print( '{}  {}   {}'.format( (coords[0] + x_decal, coords[1]), passed, color_detected) )
-
+        # print( '{}  {}   {}'.format( (coords[0] + x_decal, coords[1]), passed, color_detected) )
     if number > 6:
         number = 0
-    print( '={}'.format(number) )
+    # print( '={}'.format(number) )
     return number
 
 def get_number(im):
@@ -162,36 +157,62 @@ def valid_img(im):
     else:
         return None
 
-def new_image_action(im, res, dirpath, filename):
-    # get color
-    # color = get_color(im, (59, 37))
+def get_screen_infos(im):
     color = valid_img(im)
-    # stop here if not in valid colors
     if color == None:
-    # if color not in valid_colors:
-        # delete current file
-        file_path = os.path.join(dirpath, filename  + '.png')
-        if not DEBUG:
-            delete_file(file_path)
-        print('Undetected dices!')
         return None
-    else:
-        print('Color: {}'.format(color))
-        number = get_number(im)
-        # stop here if not in valid number
-            # return None
-        print('Number: {}'.format(number))
-        file_path = os.path.join(dirpath, filename  + '.png')
-        filename = '{}-{}-hex{}-{}'.format(filename, res, color, number)
-        # rename current to save compare score and color
-        rename_file(file_path, os.path.join(dirpath, filename + '.png'))
-        #return filename
 
-        res = {'filename': filename}
-        return res
+    dice1 = get_number_dice(im, 1)
+    dice2 = get_number_dice(im, 2)
+
+    results = {'color': color, 'dice1': dice1, 'dice2': dice2}
+    return results
+
+def new_image_action2(screen_info, res, dirpath, filename):
+    print('Color: {}'.format(screen_info['color']))
+    number = screen_info['dice1'] + screen_info['dice2']
+    print('Number: {}'.format(number))
+
+    file_path = os.path.join(dirpath, filename  + '.png')
+    filename = '{}-{}-hex{}-{}'.format(filename, res, screen_info['color'], number)
+    # rename current to save compare score and color
+    rename_file(file_path, os.path.join(dirpath, filename + '.png'))
+
+    res = {'filename': filename}
+    return res
+
+#
+# def new_image_action(im, res, dirpath, filename):
+#     # get color
+#     # color = get_color(im, (59, 37))
+#     color = valid_img(im)
+#     # stop here if not in valid colors
+#     if color == None:
+#     # if color not in valid_colors:
+#         # delete current file
+#         file_path = os.path.join(dirpath, filename  + '.png')
+#         if not DEBUG:
+#             delete_file(file_path)
+#         print('Undetected dices!')
+#         return None
+#     else:
+#
+#         print('Color: {}'.format(color))
+#         number = get_number(im)
+#         # stop here if not in valid number
+#             # return None
+#         print('Number: {}'.format(number))
+#         file_path = os.path.join(dirpath, filename  + '.png')
+#         filename = '{}-{}-hex{}-{}'.format(filename, res, color, number)
+#         # rename current to save compare score and color
+#         rename_file(file_path, os.path.join(dirpath, filename + '.png'))
+#         #return filename
+#
+#         res = {'filename': filename}
+#         return res
 
 # watch
-def watch(screenshot_coords, action, dirpath, lastfilename, nb):
+def watch(screenshot_coords, action, dirpath, lastfilename, lastfileimage, nb):
     # global lastfilename, nb
     global MODE
     if action == 'app':
@@ -222,28 +243,61 @@ def watch(screenshot_coords, action, dirpath, lastfilename, nb):
                     print(e)
             else:
                 print('--------------------------------------\nScreenshot taken: ' + filename + '.png')
-                print('Comparaison: {}'.format(res))
-                # rename current to save compare score and color
-                results = new_image_action(im, res, dirpath, filename)
-                if results != None:
-                    lastfilename = results['filename'];
-                    # nb = results['nb']
-                    nb = nb + 1
-                    print('NBTOT: {}'.format(nb))
+                # second verification
+                screen_info = get_screen_infos(im)
+                last_screen_info = get_screen_infos(lastfileimage)
+                print(screen_info)
+                print(last_screen_info)
+                print('la')
+                if screen_info == None or last_screen_info == None :
+                    print('Undetected dices!')
+                    try:
+                        # delete current file
+                        delete_file(file_path)
+                    except Exception as e:
+                        print(e)
+                elif screen_info["dice1"] == last_screen_info["dice1"] and screen_info["dice2"] == last_screen_info["dice2"] :
+                    print('Excatly the same dices, ignoring last one, scrore: {}'.format(res))
+                    try:
+                        # delete current file
+                        delete_file(file_path)
+                    except Exception as e:
+                        print(e)
+                else:
+                    print('Comparaison score: {}'.format(res))
+                    # rename current to save compare score and color
+                    # results = new_image_action(im, res, dirpath, filename)
+                    results = new_image_action2(screen_info, res, dirpath, filename)
+                    if results != None:
+                        lastfilename = results['filename'];
+                        lastfileimage = im
+                        # nb = results['nb']
+                        nb = nb + 1
+                        print('NBTOT: {}'.format(nb))
+
 
         except Exception as e:
             print(e)
 
     else:
         print('--------------------------------------\nScreenshot taken: ' + filename + '.png')
-        results = new_image_action(im, 0, dirpath, filename)
-        if results != None:
-            lastfilename = results['filename'];
-            # nb = results['nb']
-            nb = nb + 1
-            print('NBTOT: {}'.format(nb))
+        # results = new_image_action(im, 0, dirpath, filename)
+        screen_info = get_screen_infos(im)
+        if screen_info != None:
+            results = new_image_action2(screen_info, 0, dirpath, filename)
+            if results != None:
+                lastfilename = results['filename'];
+                lastfileimage = im
+                nb = nb + 1
+                print('NBTOT: {}'.format(nb))
+        else:
+            # delete current file
+            file_path = os.path.join(dirpath, filename  + '.png')
+            if not DEBUG:
+                delete_file(file_path)
+            print('Undetected dices!')
 
     sys.stdout.flush()
 
-    results = {'lastfilename': lastfilename, 'nb': nb}
+    results = {'lastfilename': lastfilename, 'lastfileimage': lastfileimage, 'nb': nb}
     return results
