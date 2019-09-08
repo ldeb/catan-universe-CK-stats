@@ -203,8 +203,10 @@ $(function() {
     var num = 0;
     special_colors.forEach(function(col) {
       let nb = colors[col];
-      nb = (typeof nb === 'undefined') ? 0 : nb;
-      colors[col] = nb;
+      if(typeof nb === 'undefined') {
+        nb = 0;
+        colors[col] = nb;
+      };
       // html+= '<div class="color" style="background-color:#'+col+';">' + nb + '</div>';
       $('.com input').eq(num).val(nb).change();
       tot += nb;
@@ -239,13 +241,14 @@ $(function() {
 
     // html+= ' = <strong>' + tot + '</strong>';
     // html+= '<hr>';
-    var nb_robber = ( colors['000000'] != undefined ) ? colors['000000'] : 0;
-    colors['000000'] = nb_robber;
-    // console.log('nb_robber: '+nb_robber);
-    if(MODE == 'app') {
-      tot += nb_robber;
-      $('.com input').eq(3).val(nb_robber).change();
-    }
+    // if( colors['000000'] == undefined ) { // first time ?
+    //   colors['000000'] = 0;
+    // }
+    var nb_robber = colors['000000'];
+    // if(MODE == 'app') {
+    //   tot += nb_robber;
+    //   $('.com input').eq(3).val(nb_robber).change();
+    // }
     var robber_coming = 7 - (nb_robber % 7);
     var robber_class = (robber_coming <= 3) ? 'bg-warning text-dark' : 'bg-secondary';
     robber_class = (robber_coming == 1) ? 'bg-danger' : robber_class;
@@ -328,12 +331,13 @@ $(function() {
   Chart.defaults.global.defaultFontColor = '#fff';
   Chart.defaults.global.defaultFontSize = 12;
 
+  var myChart_dices;
+  var myChart_colors;
   function update_stats_graph(last_stats){
-
-    console.log(last_stats);
-
+    // console.log(last_stats);
+    if(myChart_dices) myChart_dices.destroy();
     var ctx = document.getElementById('stats_graph').getContext('2d');
-    var myChart = new Chart(ctx, {
+    myChart_dices = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: special_dices,
@@ -344,7 +348,19 @@ $(function() {
           // backgroundImage: 'url(background.jpg)',
           // backgroundPosition: 'bottom right',
           // backgroundRepeat: 'repeat-y',
-          backgroundColor: '#a45633',
+          backgroundColor: [
+            '#a45633',
+            '#a45633',
+            '#a45633',
+            '#a45633',
+            '#a45633',
+            '#969696',
+            '#a45633',
+            '#a45633',
+            '#a45633',
+            '#a45633',
+            '#a45633',
+          ]
         }]
       },
       options: {
@@ -392,10 +408,11 @@ $(function() {
     // if( special_colors['000000'] == undefined ) special_colors.push('000000');
     if( special_colors.indexOf('000000') == -1 ) special_colors.push('000000');
     let max_nb_color = get_max_from_obj(last_stats['colors'])
-    console.log(special_colors);
+    // console.log(special_colors);
 
+    if(myChart_colors) myChart_colors.destroy();
     var ctx2 = document.getElementById('colors_graph').getContext('2d');
-    var myChart2 = new Chart(ctx2, {
+    myChart_colors = new Chart(ctx2, {
       type: 'horizontalBar',
       data: {
         labels: special_colors,
