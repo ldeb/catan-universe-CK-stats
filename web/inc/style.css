@@ -37,12 +37,13 @@ h7 {
 
   color: #fff;
   padding: 0 0 0 2px;
-  font-weight: bold;
+  /* font-weight: bold; */
   width: 0px;
+  text-align: right;
 }
 .bar_legend {
   display: inline-block;
-  margin-left: 5px;
+  margin-right: 5px;
 }
 .dice .row:nth-child(6) .bar {
   background-color: #969696;
@@ -74,7 +75,7 @@ h7 {
 .com.robber .col-1 {  background-color: #000;}
 
 input[type="number"] {
-  width: 50px;
+  width: 40px;
 }
 .dice .col-1 {
   text-align: right;

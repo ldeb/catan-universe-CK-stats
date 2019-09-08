@@ -45,7 +45,13 @@
             <?php for($i=2; $i<=12; $i++) : ?>
             <div class="row no-gutters0">
               <div class="col-1"><?=$i?></div>
-              <div class="col"><input name="d<?=$i?>" type="number" step="1" min="0" value="0"><div class="bar">&nbsp;</div><div class="bar_legend"><?=$i?></div></div>
+              <div class="col">
+                <input name="d<?=$i?>" type="number" step="1" min="0" value="0">
+                <div class="bar">
+                  <!-- &nbsp; -->
+                  <div class="bar_legend"><?=$i?></div>
+                </div>
+              </div>
             </div>
           <?php endfor; ?>
           </div>
