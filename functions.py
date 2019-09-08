@@ -248,7 +248,6 @@ def watch(screenshot_coords, action, dirpath, lastfilename, lastfileimage, nb):
                 last_screen_info = get_screen_infos(lastfileimage)
                 print(screen_info)
                 print(last_screen_info)
-                print('la')
                 if screen_info == None or last_screen_info == None :
                     print('Undetected dices!')
                     try:
@@ -256,7 +255,7 @@ def watch(screenshot_coords, action, dirpath, lastfilename, lastfileimage, nb):
                         delete_file(file_path)
                     except Exception as e:
                         print(e)
-                elif screen_info["dice1"] == last_screen_info["dice1"] and screen_info["dice2"] == last_screen_info["dice2"] :
+                elif screen_info["dice1"] == last_screen_info["dice1"] and screen_info["dice2"] == last_screen_info["dice2"] and screen_info["color"] == last_screen_info["color"]:
                     print('Excatly the same dices, ignoring last one, scrore: {}'.format(res))
                     try:
                         # delete current file
