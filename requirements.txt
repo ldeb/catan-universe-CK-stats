@@ -22,7 +22,7 @@ Pygments==2.4.2
 pyparsing==2.4.2
 pyscreenshot==0.5.1
 pytz==2019.2
-pywin32==224
+pywin32==301
 pywinauto==0.6.7
 requests==2.22.0
 six==1.12.0
